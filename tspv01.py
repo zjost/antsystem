@@ -17,10 +17,11 @@ N = len(n[0,:])
 ''' Ants '''
 # Define number of ants and list object that will hold them
 number_of_ants = N
+#number_of_ants = 1
 my_ants = []
 
 # Define global ants characteristics
-alpha = .4 # Pheromone effect
+alpha = 1 # Pheromone effect
 beta = 5 # Greed
 Q = 100
 init_city = 0
@@ -30,11 +31,10 @@ init_city = 0
 #random.seed(1)
 
 ''' Initialization '''
-# 
 tau = np.ones((30,30)) # initial trail
 epp = 0.0001 # Minimum branch level
 evap = 0.5 # evaporation constant
-iters = 3000 # Number of ant cycles
+iters = 100 # Number of ant cycles
 L_list = [] # list of global path lengths
 L_list_a1 = [] # list of ant 1 path lengths
 L_min = 100000 # Variable to hold minimum path
@@ -59,6 +59,7 @@ for j in range(iters):
 
     # Create new ants
     for i in range(number_of_ants):
+        init_city = random.randint(0, N-1)
         my_ants.append( Ant(N,alpha, beta, Q, init_city) )
 
 
@@ -85,12 +86,13 @@ for j in range(iters):
         if ant.L < L_min:
             L_min = ant.L
             path_min = ant.tab
-    #print(delta_tau)
     L_list_a1.append(my_ants[0].L)
     L_min_list.append(L_min)
-    
+
     # Update the global tau
+    #print(delta_tau)
     tau = evap*tau+delta_tau
+    #print(tau)
     # Prune to get rid of super small numbers
     tau = tau_prune(tau,epp)
     # Calculate branching

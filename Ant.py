@@ -35,4 +35,16 @@ class Ant():
     def scale_tau(self):
         # Scale tau by total path length, once known
         self.dtau = self.dtau/self.L
+
+    def reset(self, init_city):
+        # Clear delta tau for ant
+        city_count = len(self.dtau[:,0])
+        self.dtau = np.zeros((city_count,city_count))
+        self.L = 0 # total path length
+        self.tab = [init_city] # city tab
+        self.city = init_city # current city
+
+    def alphaUpdate(self, new_alpha):
+        # Update alpha parameter
+        self.alpha = new_alpha
         
