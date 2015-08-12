@@ -8,7 +8,6 @@ from functions.prob_city import prob_city
 from Ant import Ant
 from Colony import Colony
 from functions.colCreate import colCreate
-from functions.colCreatev2 import colCreatev2
 from functions.colEvo import colEvo
 from functions.tsp import tsp
 from functions.fitness import fitness
@@ -41,7 +40,7 @@ init_city = 0
 iters = 10 # Number of ant cycles
 nColonies = 10
 alpha_min = 0
-alpha_max = 5
+alpha_max = 4
 d_alpha_max = 0.01 # Max evo shift in alpha
 evo_cycles = 10
 fitness_mat = np.zeros((evo_cycles, nColonies))
@@ -51,7 +50,7 @@ lAvg_mat = np.zeros((evo_cycles, nColonies))
 alphaBestMin = []
 
 # Fitness function parameters
-c0 = 2000
+c0 = 1000
 c1 = 1000
 
 params = (nColonies, iters, evo_cycles, alpha_min, alpha_max,
@@ -59,7 +58,7 @@ params = (nColonies, iters, evo_cycles, alpha_min, alpha_max,
           
 
 # Initialize a list of ant colonies
-colony_list = colCreatev2(nColonies, number_of_ants, N, alpha_min,
+colony_list = colCreate(nColonies, number_of_ants, N, alpha_min,
                         alpha_max, beta, Q)
 
 for i in range(evo_cycles):
@@ -90,14 +89,14 @@ for i in range(evo_cycles):
     alphaBestMin.append(colony_list[bestIdx].getAlphaDist())
 
     # Evolve the colony list for the next iteration
-    colony_list, offspring_list = colEvo(colony_list, c0, c1, d_alpha_max)
+    colony_list, offspring_list = colEvo(colony_list, c0, c1)
     print(fitness_mat[i,:])
     print(offspring_list)
 
 
 saveFiles(fitness_mat, alphaBestMin, lMin_mat, lAvg_mat, params, int(time()))
-plotFitnessMat(fitness_mat)
-plotAlphaDist(alphaBestMin[0:evo_cycles:int(evo_cycles/10)])
-plotLBox(lMin_mat, 0)
-plotLBox(lAvg_mat, 1)
+#plotFitnessMat(fitness_mat)
+#plotAlphaDist(alphaBestMin[0:evo_cycles:int(evo_cycles/10)])
+#plotLBox(lMin_mat, 0)
+#plotLBox(lAvg_mat, 1)
 
