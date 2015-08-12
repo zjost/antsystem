@@ -1,8 +1,0 @@
-nColonies=10
-iters=20
-evo_cycles=10
-alpha_min=1
-alpha_max=5
-d_alpha_max=0.01
-c0=2000
-c1=1000
