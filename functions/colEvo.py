@@ -1,11 +1,14 @@
 ''' This function will run the mutation algorithm on a list of colonies
 and return a new list of colonies'''
 
-from functions.discreteMutate import discreteMutate
+from functions.colMutate import colMutate
 from functions.colSelection import colSelection
 from copy import deepcopy
 
-def colEvo(col_list, c0, c1):
+def colEvo(col_list, evoParms):
+    # Unpack the parameters
+    (c0, c1, alpha_min, alpha_max, max_mutation) = evoParms
+
     nColonies = len(col_list)
     # Get number of offspring for each colony
     offspring_list = colSelection(col_list, c0, c1)
@@ -22,7 +25,7 @@ def colEvo(col_list, c0, c1):
             # Append mutated colony i for each number of children
             # Make a copy so that the original ants are not modified
             temp_col = deepcopy(col_list[i])
-            new_col = discreteMutate(temp_col)
+            new_col = colMutate(temp_col, alpha_min, alpha_max, max_mutation)
             new_col_list.append(new_col)
 
     return new_col_list, offspring_list

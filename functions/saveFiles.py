@@ -4,7 +4,7 @@ import numpy as np
 def saveFiles(fitness_mat, alphaBestMin, lMin_mat, lAvg_mat, params, count):
 
     (nColonies, iters, evo_cycles, alpha_min, alpha_max,
-          d_alpha_max, c0, c1) = params
+          max_mutation, c0, c1) = params
 
     #parms = (nColonies, evo_cycles, iters, alpha_min, alpha_max,
     #         d_alpha_max)
@@ -29,7 +29,7 @@ def saveFiles(fitness_mat, alphaBestMin, lMin_mat, lAvg_mat, params, count):
     parm_list.append('evo_cycles='+str(evo_cycles))
     parm_list.append('alpha_min='+str(alpha_min))
     parm_list.append('alpha_max='+str(alpha_max))
-    parm_list.append('d_alpha_max='+str(d_alpha_max))
+    parm_list.append('max_mutation='+str(max_mutation))
     parm_list.append('c0='+str(c0))
     parm_list.append('c1='+str(c1))
     # Store into a numpy array

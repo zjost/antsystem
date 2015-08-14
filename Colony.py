@@ -10,7 +10,8 @@ class Colony():
         self.ants = ant_list # list of ants from Ant class
         self.N = len(ant_list) # number of ants in colony
         self.L = 1e5 # total path length
-        self.minL = 1e5 # minimum L 
+        self.minL = 1e5 # minimum L
+        self.alphaWeights = []
 
     def getAlphaDist(self):
         # This method returns an array of alpha values for the population
@@ -61,5 +62,9 @@ class Colony():
         # Update minimum L and total L
         self.getMinL()
         self.getTotL()
+
+    def setAlphaWeights(self, alpha_weights):
+        # This method sets the alpha_weights array of the colony
+        self.alphaWeights = alpha_weights
 
         

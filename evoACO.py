@@ -36,30 +36,40 @@ init_city = 0
 # Define random characteristics
 #random.seed(1)
 
-''' Initialization '''
-iters = 10 # Number of ant cycles
-nColonies = 10
+''' Cycle Parameters '''
+iters = 50 # Number of ant cycles
+#d_alpha_max = 0.01 # Max evo shift in alpha
+evo_cycles = 100
+
+# Colony evolution parms
+c0 = 0 # weight for Lavg
+c1 = 2000 # weight for Lmin
 alpha_min = 0
-alpha_max = 4
-d_alpha_max = 0.01 # Max evo shift in alpha
-evo_cycles = 10
+alpha_max = 10
+max_mutation = 0.05
+evoParms = (c0, c1, alpha_min, alpha_max, max_mutation)
+
+# Colony create parms
+nColonies = 100
+initMethodFlag = 1
+nBins = 10
+colCreateParms = (nColonies, number_of_ants, N, alpha_min,
+                  alpha_max, beta, Q, initMethodFlag, nBins)
+
+
+# Saved files params
+params = (nColonies, iters, evo_cycles, alpha_min, alpha_max,
+          max_mutation, c0, c1)
+
+# Variable initialization
 fitness_mat = np.zeros((evo_cycles, nColonies))
 lMin_mat = np.zeros((evo_cycles, nColonies))
 lAvg_mat = np.zeros((evo_cycles, nColonies))
 # Will hold the best alpha distribution for each evo cycle
 alphaBestMin = []
 
-# Fitness function parameters
-c0 = 1000
-c1 = 1000
-
-params = (nColonies, iters, evo_cycles, alpha_min, alpha_max,
-          d_alpha_max, c0, c1)
-          
-
 # Initialize a list of ant colonies
-colony_list = colCreate(nColonies, number_of_ants, N, alpha_min,
-                        alpha_max, beta, Q)
+colony_list = colCreate(colCreateParms)
 
 for i in range(evo_cycles):
     # create a colony index
@@ -89,7 +99,7 @@ for i in range(evo_cycles):
     alphaBestMin.append(colony_list[bestIdx].getAlphaDist())
 
     # Evolve the colony list for the next iteration
-    colony_list, offspring_list = colEvo(colony_list, c0, c1)
+    colony_list, offspring_list = colEvo(colony_list, evoParms)
     print(fitness_mat[i,:])
     print(offspring_list)
 

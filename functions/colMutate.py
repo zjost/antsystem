@@ -1,13 +1,14 @@
 ''' This function will reproduce a colony with mutated individuals.
-It will merely copy each ant and shift the alpha by a number from
-a uniform distribution centered at zero and between a specific
-max distance'''
+It will generate a shifted alpha_weight array and assign new alpha
+values to the ants based on these probabilities'''
 import random
+from functions.alphaWeightMutate import alphaWeightMutate
+from functions.alphaAssign import alphaAssign
 
-def colMutate(colony, d_alpha_max):
-    for ant in colony.ants:
-        old_alpha = ant.alpha
-        new_alpha = old_alpha + random.uniform(-d_alpha_max/2, d_alpha_max/2)
-        ant.alphaUpdate(new_alpha)
+def colMutate(colony, alpha_min, alpha_max, max_mutation):
+    # Mutate the alpha_weights of the colony
+    alphaWeightMutate(colony.alphaWeights, max_mutation)
+    # Assign new alpha values based on these mutated weights
+    alphaAssign(colony, alpha_min, alpha_max)
 
     return colony
